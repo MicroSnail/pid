@@ -100,17 +100,12 @@ assign id_value[ 3: 0] =  4'h1; // board type   1 - release 1
 //---------------------------------------------------------------------------------
 //
 //  System bus connection
-reg [8-1:0] myreg;
-
 
 always @(posedge clk_i)
 if (rstn_i == 1'b0) begin
   digital_loop <= 1'b0;
-  myreg <= 8'h00;
 end else if (sys_wen) begin
   if (sys_addr[19:0]==20'h0c)   digital_loop <= sys_wdata[0];
-  if (sys_addr[19:0]==20'h100)  myreg <= sys_wdata[7:0];
-  
 end
 
 wire sys_en;
@@ -128,12 +123,8 @@ end else begin
     20'h00004: begin sys_ack <= sys_en;  sys_rdata <= {                dna_value[32-1: 0]}; end
     20'h00008: begin sys_ack <= sys_en;  sys_rdata <= {{64- 57{1'b0}}, dna_value[57-1:32]}; end
     20'h0000c: begin sys_ack <= sys_en;  sys_rdata <= {{32-  1{1'b0}}, digital_loop      }; end
-    20'h00100: begin sys_ack <= sys_en;  sys_rdata <= {{32-  8{1'b0}}, myreg             }; end
-    //I added the line above 0x4000_0100 is the address for of myreg
       default: begin sys_ack <= sys_en;  sys_rdata <=  32'h0                              ; end
   endcase
 end
-
-assign led_o = myreg;
 
 endmodule

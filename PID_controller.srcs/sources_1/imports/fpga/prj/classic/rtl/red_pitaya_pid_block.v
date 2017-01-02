@@ -61,13 +61,13 @@ module red_pitaya_pid_block #(
    // settings
    input      [ 14-1: 0] set_sp_i        ,  // set point
    input      [ 14-1: 0] set_kp_i        ,  // Kp
-   input      [32-14-1:0] kp_boost       ,  // Kp * kp_boost
+   input      [ 14-1: 0] kp_shift       ,  // Kp * kp_shift
    input      [ 14-1: 0] ki_shift      ,  // int / ki_shift
-   input      [15-1:0]   dc_offset       ,  //pid_sum = p + i + d + offset
+   input      [ 15-1: 0] dc_offset       ,  //pid_sum = p + i + d + offset
    input      [ 14-1: 0] set_ki_i        ,  // Ki
    input      [ 14-1: 0] set_kd_i        ,  // Kd
    input                 int_rst_i       ,  // integrator reset
-   output     [15-1:0]   errorMon_o
+   output     [ 15-1: 0]   errorMon_o
 );
 
 
@@ -112,8 +112,8 @@ always @(posedge clk_i) begin
    end
 end
 
-assign kp_mult = $signed(error) * $signed(kp_boost) * $signed(set_kp_i);
-//assign kp_mult = error * kp_boost* set_kp_i;
+assign kp_mult = $signed(error) * $signed(set_kp_i);
+//assign kp_mult = error * kp_shift* set_kp_i;
 //---------------------------------------------------------------------------------
 //  Integrator
 
@@ -198,7 +198,9 @@ always @(posedge clk_i) begin
    end
 end
 
-assign pid_sum = $signed(kp_reg) + $signed($signed(int_shr) >>> (ki_shift)) + $signed(kd_reg_s) + $signed(dc_offset);
+assign pid_sum = $signed($signed(kp_reg) >>> (kp_shift)) 
+               + $signed($signed(int_shr) >>> (ki_shift)) 
+               + $signed(kd_reg_s) + $signed(dc_offset);
 
 assign dat_o = pid_out ;
 

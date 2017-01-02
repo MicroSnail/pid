@@ -89,7 +89,7 @@ reg  [ 14-1: 0] set_11_ki    ;
 reg  [ 14-1: 0] set_11_kd    ;
 reg             set_11_irst  ;
 
-reg  [32-14-1:0] kp_boost; // see memory location at the end
+reg  [32-14-1:0] kp_shift; // see memory location at the end
 reg  [15-1:0]    dc_offset;
 reg  [14-1:0]    ki_shift;
 
@@ -115,7 +115,7 @@ red_pitaya_pid_block #(
   .set_sp_i     (   switchableSetpoint),
   .ki_shift     (   ki_shift          ),                  
   .set_kp_i     (  (KpEnabled ? set_11_kp : 14'b0    ) ),  // Kp
-  .kp_boost     (   kp_boost          ),
+  .kp_shift     (   kp_shift          ),
   .dc_offset    (   dc_offset         ),
   .set_ki_i     (  (KiEnabled ? set_11_ki : 14'b0    ) ),  // Ki
   .set_kd_i     (  set_11_kd          ),                   // Kd
@@ -205,12 +205,12 @@ always @(posedge clk_i) begin
       set_11_ki    <=   14'd0 ;
       set_11_kd    <=   14'd0 ;
       set_11_irst  <=    1'b1 ;
-      kp_boost     <=   17'b1 ;
+      kp_shift     <=   14'b0 ;
       sp_manual    <=    1'b1 ;
       dc_offset    <=   14'b1 ;
       adderEnabled <=    1'b0 ;
       sweepGain    <=   14'b0 ;
-      ki_shift     <=   14'b1 ; // intetralTerm = Integrated / ki_shift
+      ki_shift     <=   14'b0 ; // intetralTerm = $signed(Integrated >>> ki_shift)
    end
    else begin
       if (sys_wen) begin
@@ -221,7 +221,7 @@ always @(posedge clk_i) begin
          if (sys_addr[19:0]==16'h18)    set_11_ki     <= sys_wdata[14-1:0] ;
          if (sys_addr[19:0]==16'h1C)    set_11_kd     <= sys_wdata[14-1:0] ;
          if (sys_addr[19:0]==16'h50)    sp_manual     <= sys_wdata[14-1:0] ; // sp_manual = 1 to use manual set point
-         if (sys_addr[19:0]==16'h54)    kp_boost      <= sys_wdata[32-14-1:0] ; // Kp_boost * kp
+         if (sys_addr[19:0]==16'h54)    kp_shift      <= sys_wdata[14-1:0] ; // kp_shift * kp
          if (sys_addr[19:0]==16'h58)    dc_offset     <= sys_wdata[15-1:0] ; // DC offset 
          if (sys_addr[19:0]==16'h5C)    adderEnabled  <= sys_wdata[15-1:0] ; // PID_out + sweep
          if (sys_addr[19:0]==16'h60)    sweepGain     <= sys_wdata[15-1:0] ; //
@@ -249,7 +249,7 @@ end else begin
       20'h1C : begin sys_ack <= sys_en;          sys_rdata <= {{32-14{1'b0}}, set_11_kd}          ; end 
   
       20'h50 : begin sys_ack <= sys_en;          sys_rdata <= {{32-1{1'b0}}, sp_manual}           ; end
-      20'h54 : begin sys_ack <= sys_en;          sys_rdata <= {{32-18{1'b0}}, kp_boost}           ; end
+      20'h54 : begin sys_ack <= sys_en;          sys_rdata <= {{32-14{1'b0}}, kp_shift}           ; end
       20'h58 : begin sys_ack <= sys_en;          sys_rdata <= {{32-15{1'b0}}, dc_offset}          ; end
       20'h5C : begin sys_ack <= sys_en;          sys_rdata <= {{32-1{1'b0}}, adderEnabled}        ; end
       20'h60 : begin sys_ack <= sys_en;          sys_rdata <= {{32-14{1'b0}}, sweepGain}          ; end

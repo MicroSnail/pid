@@ -30,7 +30,16 @@ module FIR_filter
   (
     input       [DW - 1 : 0]                datIn,
     output reg  [out_DW - 1 : 0]            datOut,
-    input                                   clk
+    input                                   clk,
+    // System bus
+    input      [ 32-1:0] sys_addr   ,  // bus address
+    input      [ 32-1:0] sys_wdata  ,  // bus write data
+    input      [  4-1:0] sys_sel    ,  // bus write byte select
+    input                sys_wen    ,  // bus write enable
+    input                sys_ren    ,  // bus read enable
+    output reg [ 32-1:0] sys_rdata  ,  // bus read data
+    output reg           sys_err    ,  // bus error indicator
+    output reg           sys_ack       // bus acknowledge signal    
   );
 
     // total number of sample/ size of the sample array is
@@ -44,9 +53,9 @@ module FIR_filter
 
 
 
-    reg   [totalNBits - 1 : 0]      flatCoeff;
+    reg   [totalNBits - 1 : 0]      flatCoeff = 0;
 //    reg   [dataBitwidth * nData - 1 : 0]  flatSample;
-    reg   [out_DW * nMAC - 1 : 0]   mac_out_storage;
+    reg   [out_DW * nMAC - 1 : 0]   mac_out_storage = 0;
     wire  [out_DW * nMAC - 1 : 0]   mac_direct_out;
     wire   [out_DW - 1 : 0]         mac_sum;
     wire  [nMAC - 1: 0]             mac_armed;
@@ -54,14 +63,11 @@ module FIR_filter
     wire                            sum_finished;
     wire                            sum_armed;
 
-
-
-
 //------Sampler----------------------------------------//
-    reg   [totalNBits - 1 : 0]  flatSample = 0;
-    reg sampled = 0;
-    wire  [DW - 1 : 0]  newSample;
-    wire rst_sampler = 0;
+    reg   [totalNBits - 1 : 0]  flatSample  = 0;
+    reg                         sampled     = 0;
+    wire  [DW - 1 : 0]          newSample;
+    wire                        rst_sampler = 0;
     
     always @(posedge clk) begin
       if (&mac_armed & ~sampled) begin 

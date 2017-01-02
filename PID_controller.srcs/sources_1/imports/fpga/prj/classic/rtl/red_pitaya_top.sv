@@ -307,9 +307,9 @@ assign ps_sys.ack   = |(sys_cs & sys_ack);
 
 // unused system bus slave ports
 
-assign sys_rdata[5*32+:32] = 32'h0; 
-assign sys_err  [5       ] =  1'b0;
-assign sys_ack  [5       ] =  1'b1;
+// assign sys_rdata[5*32+:32] = 32'h0; 
+// assign sys_err  [5       ] =  1'b0;
+// assign sys_ack  [5       ] =  1'b1;
 
 assign sys_rdata[6*32+:32] = 32'h0; 
 assign sys_err  [6       ] =  1'b0;
@@ -489,6 +489,24 @@ red_pitaya_pid i_pid (
   .sys_err         (  sys_err[3]    ),  // error indicator
   .sys_ack         (  sys_ack[3]    )   // acknowledge signal
 );
+
+
+// Testing system bus connection with what? fabric memory?
+memoryTest myMemory(
+  .clk_i          (   adc_clk     ),
+  .rstn_i         (   adc_rstn    ),
+
+  // System bus
+  .sys_addr        (  sys_addr      ),  // address
+  .sys_wdata       (  sys_wdata     ),  // write data
+  .sys_sel         (  sys_sel       ),  // write byte select
+  .sys_wen         (  sys_wen[5]    ),  // write enable
+  .sys_ren         (  sys_ren[5]    ),  // read enable
+  .sys_rdata       (  sys_rdata[ 5*32+31: 5*32]  ),  // read data
+  .sys_err         (  sys_err[5]    ),  // error indicator
+  .sys_ack         (  sys_ack[5]    )   // acknowledge signal
+
+  );
 
 
 
