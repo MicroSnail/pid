@@ -1,0 +1,97 @@
+Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2016.4 (win64) Build 1733598 Wed Dec 14 22:35:39 MST 2016
+| Date         : Tue Dec 27 15:17:43 2016
+| Host         : EpsilonIJK running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z010clg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'system_xadc_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of system_xadc_0 (xilinx.com:ip:xadc_wiz:3.3) to (Rev. 2)
+
+
+
+
+
+
+Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2016.4 (win64) Build 1733598 Wed Dec 14 22:35:39 MST 2016
+| Date         : Tue Dec 27 15:17:43 2016
+| Host         : EpsilonIJK running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z010clg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'system_processing_system7_0'
+
+1. Summary
+----------
+
+SUCCESS in the update of system_processing_system7_0 (xilinx.com:ip:processing_system7:5.5 (Rev. 3)) to current project options.
+
+2. Upgrade messages
+-------------------
+
+WARNING: upgrade cannot add parameter PCW_TRACE_INTERNAL_WIDTH with default value 32 : a parameter called PCW_TRACE_INTERNAL_WIDTH already exists in processing_system7_v5_5
+WARNING: upgrade cannot add parameter PCW_USE_AXI_NONSECURE with default value 0 : a parameter called PCW_USE_AXI_NONSECURE already exists in processing_system7_v5_5
+WARNING: upgrade cannot add parameter PCW_EN_PTP_ENET0 with default value 1 : a parameter called PCW_EN_PTP_ENET0 already exists in processing_system7_v5_5
+WARNING: upgrade cannot add parameter PCW_EN_PTP_ENET0 with default value 1 : a parameter called PCW_EN_PTP_ENET0 already exists in processing_system7_v5_5
+Added parameter PCW_GP0_NUM_WRITE_THREADS with value 4 (source 'default')
+Added parameter PCW_GP0_NUM_READ_THREADS with value 4 (source 'default')
+Added parameter PCW_GP1_NUM_WRITE_THREADS with value 4 (source 'default')
+Added parameter PCW_GP1_NUM_READ_THREADS with value 4 (source 'default')
+Added parameter PCW_GP0_EN_MODIFIABLE_TXN with value 0 (source 'default')
+Added parameter PCW_GP1_EN_MODIFIABLE_TXN with value 0 (source 'default')
+Set parameter PCW_UIPARAM_DDR_BOARD_DELAY0 to value 0.25 (source 'default')
+Set parameter PCW_UIPARAM_DDR_BOARD_DELAY1 to value 0.25 (source 'default')
+Set parameter PCW_UIPARAM_DDR_BOARD_DELAY2 to value 0.25 (source 'default')
+Set parameter PCW_UIPARAM_DDR_BOARD_DELAY3 to value 0.25 (source 'default')
+
+
+
+
+
+
+Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2016.4 (win64) Build 1733598 Wed Dec 14 22:35:39 MST 2016
+| Date         : Tue Dec 27 15:17:43 2016
+| Host         : EpsilonIJK running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z010clg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'system_proc_sys_reset_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of system_proc_sys_reset_0 (xilinx.com:ip:proc_sys_reset:5.0) from (Rev. 9) to (Rev. 10)
+
+
+
+
+
+
+Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2016.4 (win64) Build 1733598 Wed Dec 14 22:35:39 MST 2016
+| Date         : Tue Dec 27 15:17:43 2016
+| Host         : EpsilonIJK running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7z010clg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'system_axi_protocol_converter_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of system_axi_protocol_converter_0_0 (xilinx.com:ip:axi_protocol_converter:2.1) from (Rev. 9) to (Rev. 11)
+

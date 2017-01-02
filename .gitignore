@@ -1,3 +1,11 @@
+#Only include sources and simulation sources
+PID_controller.cache/
+PID_controller.hw/
+PID_controller.runs/
+PID_controller.sims/
+PID_controller.ip_user_files/
+
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
